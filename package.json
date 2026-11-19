@@ -1,0 +1,11 @@
+{
+  "name": "aether-robotics",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aether Robotics — static AI & robotics engineering website template",
+  "scripts": {
+    "build": "python3 tools/build.py",
+    "dev": "python3 -m http.server 8000",
+    "start": "python3 -m http.server 8000"
+  }
+}
