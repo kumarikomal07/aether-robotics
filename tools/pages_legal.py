@@ -78,5 +78,13 @@ def cookie_prefs():
 def not_found():
     body = f'''<section class="nf"><div class="grid-bg" aria-hidden="true"></div><canvas class="net" aria-hidden="true"></canvas>{hud("hud-hero")}
   <div class="wrap nf-in"><p class="astro chroma nf-code" data-text="404">404</p><h1>Signal lost.</h1><p>The page you are looking for has moved or does not exist.</p>
-  <div class="btn-row center">{btn("/index.html", "Back to Home")}{btn("/contact.html", "Contact Us", "ghost")}</div></div></section>'''
-    return page("404.html", "Page Not Found", "The page you requested could not be found.", body, "", "/")
+  <div class="btn-row center">{btn("index.html", "Back to Home")}{btn("contact.html", "Contact Us", "ghost")}</div></div></section>'''
+    html = page("404.html", "Page Not Found", "The page you requested could not be found.", body, "", "")
+    # The 404 page is served for missing URLs at any depth, so relative links need a <base>.
+    # On a GitHub Pages project site (user.github.io/<repo>/) the site root is /<repo>/; elsewhere it is /.
+    base_js = ('<script>(function(){var s=location.pathname.split("/")[1];'
+               'var r=location.hostname.slice(-10)==="github.io"&&s?"/"+s+"/":"/";'
+               'document.write(\'<base href="\'+r+\'">\');'
+               'document.addEventListener("DOMContentLoaded",function(){var a=document.querySelector(\'a[href="#main"]\');'
+               'if(a)a.setAttribute("href",location.pathname+"#main");});})();</script>')
+    return html.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n' + base_js, 1)
